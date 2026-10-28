@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+
+  app:
+    build: .
+    container_name: appointment_app
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:localhost://postgres:5432/APPOINTMENT_DB
+      - SPRING_DATASOURCE_USERNAME=post_user
+      - SPRING_DATASOURCE_PASSWORD=post_password
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - appointment-network
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: appointment_postgres
+    environment:
+      POSTGRES_DB: APPOINTMENT_DB
+      POSTGRES_USER: post_user
+      POSTGRES_PASSWORD: post_password
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - appointment-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U post_user -d APPOINTMENT_DB"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:
+
+networks:
+  appointment-network:
+    driver: bridge
