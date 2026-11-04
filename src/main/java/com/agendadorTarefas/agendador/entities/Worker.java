@@ -1,8 +1,11 @@
 package com.agendadorTarefas.agendador.entities;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 @Table(name = "tb_worker")
@@ -16,6 +19,12 @@ public class Worker {
     @Column(length = 50,nullable = false)
     private String surname;
 
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @OneToMany(mappedBy = "worker",fetch = FetchType.LAZY)
+    private Set<Appointment> appointments = new HashSet<>();
+
+
     public Worker() {
     }
 
@@ -23,6 +32,10 @@ public class Worker {
         this.id = id;
         this.name = name;
         this.surname = surname;
+    }
+
+    public Set<Appointment> getAppointments() {
+        return appointments;
     }
 
     public Long getId() {
