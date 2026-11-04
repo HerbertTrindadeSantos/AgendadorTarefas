@@ -1,5 +1,6 @@
 package com.agendadorTarefas.agendador.entities;
 
+import com.agendadorTarefas.agendador.entities.enums.Status;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 
@@ -22,11 +23,11 @@ public class Appointment {
     public Appointment() {
     }
 
-    public Appointment(Long id, String description, Instant moment, Integer status) {
+    public Appointment(Long id, String description, Instant moment, Status status) {
         this.id = id;
         this.description = description;
         this.moment = moment;
-        this.status = status;
+        setStatus(status);
     }
 
     public Long getId() {
@@ -53,13 +54,17 @@ public class Appointment {
         this.moment = moment;
     }
 
-    public Integer getStatus() {
-        return status;
+    public Status getStatus() {
+        return Status.valueOf(this.status);
     }
 
-    public void setStatus(Integer status) {
-        this.status = status;
+    public void setStatus(Status status) {
+        if(status != null){
+            this.status = status.getCode();
+        }
     }
+
+
 
     @Override
     public boolean equals(Object o) {
