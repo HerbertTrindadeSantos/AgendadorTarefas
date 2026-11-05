@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
@@ -15,11 +15,15 @@ public class Appointment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(length = 150,nullable = false)
     private String description;
-    @JsonFormat(pattern = "dd/MM/yyyy HH:mm",timezone = "America/Sao_Paulo")
-    private Instant moment;
+
+    @JsonFormat(pattern = "HH:mm dd/MM/yyyy")
+    private LocalDateTime moment;
+
     private Integer status;
+
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "task_id")
@@ -38,14 +42,14 @@ public class Appointment {
     public Appointment() {
     }
 
-    public Appointment(Long id, String description, Instant moment, Status status) {
+    public Appointment(Long id, String description, LocalDateTime moment, Status status) {
         this.id = id;
         this.description = description;
         this.moment = moment;
         setStatus(status);
     }
 
-    public Appointment(Long id, String description, Instant moment, Integer status, Task task, Client client, Worker worker) {
+    public Appointment(Long id, String description, LocalDateTime moment, Integer status, Task task, Client client, Worker worker) {
         this.id = id;
         this.description = description;
         this.moment = moment;
@@ -71,11 +75,11 @@ public class Appointment {
         this.description = description;
     }
 
-    public Instant getMoment() {
+    public LocalDateTime getMoment() {
         return moment;
     }
 
-    public void setMoment(Instant moment) {
+    public void setMoment(LocalDateTime moment) {
         this.moment = moment;
     }
 
