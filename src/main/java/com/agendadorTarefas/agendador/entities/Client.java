@@ -15,12 +15,16 @@ public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(length = 50,nullable = false)
     private String name;
+
     @Column(length = 50,nullable = false)
     private String surname;
+
     @Column(length = 11,nullable = false,unique = true)
     private String cellPhone;
+
     @Column(length = 200,nullable = false,unique = true)
     private String address;
 

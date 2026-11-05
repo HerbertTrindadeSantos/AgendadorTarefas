@@ -14,14 +14,13 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(length = 150,nullable = false,unique = true)
     private String description;
-
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "task",fetch = FetchType.LAZY)
     private Set<Appointment> appointments = new HashSet<>();
-
 
     public Task() {
     }
