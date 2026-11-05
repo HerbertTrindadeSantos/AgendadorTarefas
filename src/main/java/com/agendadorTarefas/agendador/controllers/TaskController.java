@@ -3,10 +3,7 @@ package com.agendadorTarefas.agendador.controllers;
 import com.agendadorTarefas.agendador.entities.Task;
 import com.agendadorTarefas.agendador.services.TaskService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
@@ -23,7 +20,7 @@ public class TaskController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Task> findById(Long id){
+    public ResponseEntity<Task> findById(@PathVariable Long id){
 
         Task task = taskService.findById(id);
 
@@ -37,7 +34,7 @@ public class TaskController {
     }
 
     @PostMapping
-    public ResponseEntity<Task> insert(Task task){
+    public ResponseEntity<Task> insert(@RequestBody Task task){
 
         Task newTask = taskService.create(task);
 
