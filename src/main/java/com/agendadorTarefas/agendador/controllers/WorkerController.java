@@ -3,10 +3,7 @@ package com.agendadorTarefas.agendador.controllers;
 import com.agendadorTarefas.agendador.entities.Worker;
 import com.agendadorTarefas.agendador.services.WorkerService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
@@ -23,7 +20,7 @@ public class WorkerController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Worker> findById(Long id){
+    public ResponseEntity<Worker> findById(@PathVariable Long id){
 
         Worker worker = workerService.findById(id);
 
@@ -37,7 +34,7 @@ public class WorkerController {
     }
 
     @PostMapping
-    public ResponseEntity<Worker> insert(Worker worker){
+    public ResponseEntity<Worker> insert(@RequestBody Worker worker){
 
         Worker newWorker = workerService.create(worker);
 
