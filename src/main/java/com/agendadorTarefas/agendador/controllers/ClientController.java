@@ -3,17 +3,14 @@ package com.agendadorTarefas.agendador.controllers;
 import com.agendadorTarefas.agendador.entities.Client;
 import com.agendadorTarefas.agendador.services.ClientService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/Client")
+@RequestMapping("/client")
 public class ClientController {
 
     private ClientService clientService;
@@ -23,7 +20,7 @@ public class ClientController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Client> findById(Long id){
+    public ResponseEntity<Client> findById(@PathVariable Long id){
 
         Client client = clientService.findById(id);
 
@@ -37,7 +34,7 @@ public class ClientController {
     }
 
     @PostMapping
-    public ResponseEntity<Client> insert(Client client){
+    public ResponseEntity<Client> insert(@RequestBody Client client){
 
         Client newClient = clientService.create(client);
 
