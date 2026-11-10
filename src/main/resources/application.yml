@@ -1,5 +1,9 @@
-spring.application.name=agendador
+spring:
+  application:
+    name: agendador
 
-spring.profiles.active=test
+  profiles:
+    active: test
 
-spring.jpa.open-in-view=true
+  jpa:
+    open-in-view: true
