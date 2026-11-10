@@ -14,6 +14,5 @@ import java.util.Optional;
 @Repository
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
 
-    @Query("SELECT a FROM Appointment a WHERE a.worker.id = :workerId AND a.moment = :moment")
-    Optional<Appointment> findByWorkerAndMoment(@Param("workerId") Long workerId, @Param("moment") LocalDateTime moment);
+    boolean existsByWorkerIdAndMoment(Long workerId, LocalDateTime moment);
 }
