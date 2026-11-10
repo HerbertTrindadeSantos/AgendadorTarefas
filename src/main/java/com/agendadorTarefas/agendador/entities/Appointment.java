@@ -4,10 +4,17 @@ import com.agendadorTarefas.agendador.entities.enums.Status;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+
+@ToString
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "tb_appointment")
 public class Appointment {
@@ -20,9 +27,12 @@ public class Appointment {
     private String description;
 
     @JsonFormat(pattern = "HH:mm dd/MM/yyyy")
+    @Column(nullable = false)
     private LocalDateTime moment;
 
-    private Integer status;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Status status;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @ManyToOne(fetch = FetchType.LAZY)
@@ -39,84 +49,6 @@ public class Appointment {
     @JoinColumn(name = "worker_id")
     private Worker worker;
 
-    public Appointment() {
-    }
-
-    public Appointment(Long id, String description, LocalDateTime moment, Status status) {
-        this.id = id;
-        this.description = description;
-        this.moment = moment;
-        setStatus(status);
-    }
-
-    public Appointment(Long id, String description, LocalDateTime moment, Integer status, Task task, Client client, Worker worker) {
-        this.id = id;
-        this.description = description;
-        this.moment = moment;
-        this.status = status;
-        this.task = task;
-        this.client = client;
-        this.worker = worker;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public LocalDateTime getMoment() {
-        return moment;
-    }
-
-    public void setMoment(LocalDateTime moment) {
-        this.moment = moment;
-    }
-
-    public Status getStatus() {
-        return Status.valueOf(this.status);
-    }
-
-    public void setStatus(Status status) {
-        if(status != null){
-            this.status = status.getCode();
-        }
-    }
-
-    public Task getTask() {
-        return task;
-    }
-
-    public void setTask(Task task) {
-        this.task = task;
-    }
-
-    public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
-    public Worker getWorker() {
-        return worker;
-    }
-
-    public void setWorker(Worker worker) {
-        this.worker = worker;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
@@ -127,18 +59,5 @@ public class Appointment {
     @Override
     public int hashCode() {
         return Objects.hashCode(id);
-    }
-
-    @Override
-    public String toString() {
-        return "Appointment{" +
-                "id=" + id +
-                ", description='" + description + '\'' +
-                ", moment=" + moment +
-                ", status=" + status +
-                ", task=" + task +
-                ", client=" + client +
-                ", worker=" + worker +
-                '}';
     }
 }

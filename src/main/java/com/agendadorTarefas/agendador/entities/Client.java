@@ -3,11 +3,17 @@ package com.agendadorTarefas.agendador.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+@ToString
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "tb_client")
 public class Client {
@@ -32,61 +38,6 @@ public class Client {
     @OneToMany(mappedBy = "client",fetch = FetchType.LAZY)
     private Set<Appointment> appointments = new HashSet<>();
 
-    public Client() {
-    }
-
-    public Client(Long id, String name, String surname, String cellPhone, String address) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.cellPhone = cellPhone;
-        this.address = address;
-    }
-
-    public Set<Appointment> getAppointments() {
-        return appointments;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public String getCellPhone() {
-        return cellPhone;
-    }
-
-    public void setCellPhone(String cellPhone) {
-        this.cellPhone = cellPhone;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
@@ -97,16 +48,5 @@ public class Client {
     @Override
     public int hashCode() {
         return Objects.hashCode(id);
-    }
-
-    @Override
-    public String toString() {
-        return "Client{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", surname='" + surname + '\'' +
-                ", cellPhone='" + cellPhone + '\'' +
-                ", address='" + address + '\'' +
-                '}';
     }
 }
