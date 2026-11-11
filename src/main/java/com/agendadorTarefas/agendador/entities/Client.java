@@ -34,9 +34,16 @@ public class Client {
     @Column(length = 200,nullable = false,unique = true)
     private String address;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "client",fetch = FetchType.LAZY)
     private Set<Appointment> appointments = new HashSet<>();
+
+    public void addAppointment(Appointment appointment){
+        appointments.add(appointment);
+    }
+
+    public void removeAppointment(Appointment appointment){
+        appointments.remove(appointment);
+    }
 
     @Override
     public boolean equals(Object o) {

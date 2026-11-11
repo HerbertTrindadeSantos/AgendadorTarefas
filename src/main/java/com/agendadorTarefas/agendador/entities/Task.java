@@ -24,9 +24,16 @@ public class Task {
     @Column(length = 150,nullable = false,unique = true)
     private String description;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "task",fetch = FetchType.LAZY)
     private Set<Appointment> appointments = new HashSet<>();
+
+    public void addAppointment(Appointment appointment){
+        appointments.add(appointment);
+    }
+
+    public void removeAppointment(Appointment appointment){
+        appointments.remove(appointment);
+    }
 
     @Override
     public boolean equals(Object o) {

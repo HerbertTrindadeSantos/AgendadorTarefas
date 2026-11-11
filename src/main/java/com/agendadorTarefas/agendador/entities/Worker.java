@@ -27,9 +27,17 @@ public class Worker {
     @Column(length = 50,nullable = false)
     private String surname;
 
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+
     @OneToMany(mappedBy = "worker",fetch = FetchType.LAZY)
     private Set<Appointment> appointments = new HashSet<>();
+
+    public void addAppointment(Appointment appointment){
+        appointments.add(appointment);
+    }
+
+    public void removeAppointment(Appointment appointment){
+        appointments.remove(appointment);
+    }
 
     @Override
     public boolean equals(Object o) {
