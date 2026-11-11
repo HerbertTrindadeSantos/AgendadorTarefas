@@ -1,7 +1,7 @@
 package com.agendadorTarefas.agendador.exception;
 
-public class NotFoundEntityException extends RuntimeException {
-    public NotFoundEntityException(String message) {
+public class NotFoundWorkerException extends RuntimeException {
+    public NotFoundWorkerException(String message) {
         super(message);
     }
 }
