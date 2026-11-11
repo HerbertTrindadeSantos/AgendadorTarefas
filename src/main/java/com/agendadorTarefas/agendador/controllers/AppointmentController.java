@@ -1,5 +1,7 @@
 package com.agendadorTarefas.agendador.controllers;
 
+import com.agendadorTarefas.agendador.dtos.AppointmentRequest;
+import com.agendadorTarefas.agendador.dtos.AppointmentResponse;
 import com.agendadorTarefas.agendador.entities.Appointment;
 import com.agendadorTarefas.agendador.services.AppointmentService;
 import org.springframework.http.ResponseEntity;
@@ -20,27 +22,27 @@ public class AppointmentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Appointment> findById(@PathVariable Long id){
+    public ResponseEntity<AppointmentResponse> findById(@PathVariable Long id){
 
-        Appointment appointment = appointmentService.findById(id);
+        AppointmentResponse response = appointmentService.findById(id);
 
-        return ResponseEntity.ok().body(appointment);
+        return ResponseEntity.ok().body(response);
     }
 
     @GetMapping()
-    public ResponseEntity<List<Appointment>> findAll(){
-        List<Appointment> appointments = appointmentService.findAll();
+    public ResponseEntity<List<AppointmentResponse>> findAll(){
+        List<AppointmentResponse> appointments = appointmentService.findAll();
         return ResponseEntity.ok().body(appointments);
     }
 
     @PostMapping
-    public ResponseEntity<Appointment> insert(@RequestBody Appointment appointment){
+    public ResponseEntity<AppointmentResponse> insert(@RequestBody AppointmentRequest request){
 
-        Appointment newAppointment = appointmentService.create(appointment);
+        AppointmentResponse response = appointmentService.create(request);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(newAppointment.getId()).toUri();
+                .buildAndExpand(response.id()).toUri();
 
-        return ResponseEntity.created(uri).body(newAppointment);
+        return ResponseEntity.created(uri).body(response);
     }
 }
