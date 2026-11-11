@@ -1,0 +1,7 @@
+CREATE TABLE tb_client(
+    id BIGSERIAL PRIMARY KEY,
+    name VARCHAR[50] NOT NULL,
+    surname VARCHAR[50] NOT NULL,
+    cell_phone VARCHAR[11] NOT NULL UNIQUE,
+    address VARCHAR[200] NOT NULL
+);
