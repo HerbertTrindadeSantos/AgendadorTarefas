@@ -1,6 +1,7 @@
 package com.agendadorTarefas.agendador.entities;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
@@ -9,11 +10,9 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-@ToString
 @Setter
 @Getter
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "tb_client")
 public class Client {
@@ -34,8 +33,17 @@ public class Client {
     @Column(length = 200,nullable = false,unique = true)
     private String address;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "client",fetch = FetchType.LAZY)
     private Set<Appointment> appointments = new HashSet<>();
+
+    public Client(Long id, String name, String surname, String cellPhone, String address) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.cellPhone = cellPhone;
+        this.address = address;
+    }
 
     public void addAppointment(Appointment appointment){
         appointments.add(appointment);
@@ -55,5 +63,16 @@ public class Client {
     @Override
     public int hashCode() {
         return Objects.hashCode(id);
+    }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", surname='" + surname + '\'' +
+                ", cellPhone='" + cellPhone + '\'' +
+                ", address='" + address + '\'' +
+                '}';
     }
 }
