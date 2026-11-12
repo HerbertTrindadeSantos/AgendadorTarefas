@@ -21,7 +21,7 @@ public class DefaultAppointmentValidator implements AppointmentValidator {
     @Override
     public void validate(Appointment appointment) {
         validateComponents(appointment);
-        validate(appointment);
+        validateDate(appointment.getMoment(),appointment.getStatus());
         checkWorkerAppointment(appointment.getWorker().getId(),appointment.getMoment());
     }
 
