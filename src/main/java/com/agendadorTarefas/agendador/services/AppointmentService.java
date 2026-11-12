@@ -18,6 +18,7 @@ import com.agendadorTarefas.agendador.repositories.TaskRepository;
 import com.agendadorTarefas.agendador.repositories.WorkerRepository;
 import com.agendadorTarefas.agendador.services.validation.AppointmentValidator;
 
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,15 +44,17 @@ public class AppointmentService {
         this.clientRepository = clientRepository;
     }
 
+    @Transactional(readOnly = true)
     public AppointmentResponse findById(Long id) {
         Appointment appointment = appointmentRepository.findById(id)
                 .orElseThrow(() -> new NotFoundAppointmentException("Not Found Appointment id: " + id));
         return appointmentMapper.toResponse(appointment);
     }
 
+    @Transactional(readOnly = true)
     public List<AppointmentResponse> findAll() {
         return appointmentRepository.findAll().stream()
-                .map(AppointmentMapper::toResponse).toList();
+                .map(appointmentMapper::toResponse).toList();
     }
 
     @Transactional
