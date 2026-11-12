@@ -1,5 +1,6 @@
 package com.agendadorTarefas.agendador.controllers;
 
+import com.agendadorTarefas.agendador.dtos.WorkerSummary;
 import com.agendadorTarefas.agendador.entities.Worker;
 import com.agendadorTarefas.agendador.services.WorkerService;
 import org.springframework.http.ResponseEntity;
@@ -20,27 +21,27 @@ public class WorkerController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Worker> findById(@PathVariable Long id){
+    public ResponseEntity<WorkerSummary> findById(@PathVariable Long id){
 
-        Worker worker = workerService.findById(id);
+        WorkerSummary worker = workerService.findById(id);
 
         return ResponseEntity.ok().body(worker);
     }
 
     @GetMapping()
-    public ResponseEntity<List<Worker>> findAll(){
-        List<Worker> workers = workerService.findAll();
+    public ResponseEntity<List<WorkerSummary>> findAll(){
+        List<WorkerSummary> workers = workerService.findAll();
         return ResponseEntity.ok().body(workers);
     }
 
     @PostMapping
-    public ResponseEntity<Worker> insert(@RequestBody Worker worker){
+    public ResponseEntity<WorkerSummary> insert(@RequestBody WorkerSummary dto){
 
-        Worker newWorker = workerService.create(worker);
+        WorkerSummary worker = workerService.create(dto);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(newWorker.getId()).toUri();
+                .buildAndExpand(worker.id()).toUri();
 
-        return ResponseEntity.created(uri).body(newWorker);
+        return ResponseEntity.created(uri).body(worker);
     }
 }

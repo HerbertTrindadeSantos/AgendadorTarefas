@@ -1,5 +1,6 @@
 package com.agendadorTarefas.agendador.controllers;
 
+import com.agendadorTarefas.agendador.dtos.ClientSummary;
 import com.agendadorTarefas.agendador.entities.Client;
 import com.agendadorTarefas.agendador.services.ClientService;
 import org.springframework.http.ResponseEntity;
@@ -20,27 +21,27 @@ public class ClientController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Client> findById(@PathVariable Long id){
+    public ResponseEntity<ClientSummary> findById(@PathVariable Long id){
 
-        Client client = clientService.findById(id);
+        ClientSummary client = clientService.findById(id);
 
         return ResponseEntity.ok().body(client);
     }
 
     @GetMapping()
-    public ResponseEntity<List<Client>> findAll(){
-        List<Client> clients = clientService.findAll();
+    public ResponseEntity<List<ClientSummary>> findAll(){
+        List<ClientSummary> clients = clientService.findAll();
         return ResponseEntity.ok().body(clients);
     }
 
     @PostMapping
-    public ResponseEntity<Client> insert(@RequestBody Client client){
+    public ResponseEntity<ClientSummary> insert(@RequestBody ClientSummary dto){
 
-        Client newClient = clientService.create(client);
+        ClientSummary client = clientService.create(dto);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(newClient.getId()).toUri();
+                .buildAndExpand(client.id()).toUri();
 
-        return ResponseEntity.created(uri).body(newClient);
+        return ResponseEntity.created(uri).body(client);
     }
 }

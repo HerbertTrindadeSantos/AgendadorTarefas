@@ -1,5 +1,6 @@
 package com.agendadorTarefas.agendador.controllers;
 
+import com.agendadorTarefas.agendador.dtos.TaskSummary;
 import com.agendadorTarefas.agendador.entities.Task;
 import com.agendadorTarefas.agendador.services.TaskService;
 import org.springframework.http.ResponseEntity;
@@ -20,27 +21,27 @@ public class TaskController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Task> findById(@PathVariable Long id){
+    public ResponseEntity<TaskSummary> findById(@PathVariable Long id){
 
-        Task task = taskService.findById(id);
+        TaskSummary task = taskService.findById(id);
 
         return ResponseEntity.ok().body(task);
     }
 
     @GetMapping()
-    public ResponseEntity<List<Task>> findAll(){
-        List<Task> tasks = taskService.findAll();
+    public ResponseEntity<List<TaskSummary>> findAll(){
+        List<TaskSummary> tasks = taskService.findAll();
         return ResponseEntity.ok().body(tasks);
     }
 
     @PostMapping
-    public ResponseEntity<Task> insert(@RequestBody Task task){
+    public ResponseEntity<TaskSummary> insert(@RequestBody TaskSummary dto){
 
-        Task newTask = taskService.create(task);
+        TaskSummary task = taskService.create(dto);
 
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(newTask.getId()).toUri();
+                .buildAndExpand(task.id()).toUri();
 
-        return ResponseEntity.created(uri).body(newTask);
+        return ResponseEntity.created(uri).body(task);
     }
 }

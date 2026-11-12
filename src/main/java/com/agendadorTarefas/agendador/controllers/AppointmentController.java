@@ -4,6 +4,7 @@ import com.agendadorTarefas.agendador.dtos.AppointmentRequest;
 import com.agendadorTarefas.agendador.dtos.AppointmentResponse;
 import com.agendadorTarefas.agendador.entities.Appointment;
 import com.agendadorTarefas.agendador.services.AppointmentService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -36,7 +37,7 @@ public class AppointmentController {
     }
 
     @PostMapping
-    public ResponseEntity<AppointmentResponse> insert(@RequestBody AppointmentRequest request){
+    public ResponseEntity<AppointmentResponse> insert(@Valid @RequestBody AppointmentRequest request){
 
         AppointmentResponse response = appointmentService.create(request);
 
