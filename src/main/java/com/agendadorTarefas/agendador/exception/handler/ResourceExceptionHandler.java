@@ -70,7 +70,7 @@ public class ResourceExceptionHandler {
 
         String error = "Duplicate date";
 
-        HttpStatus status = HttpStatus.BAD_REQUEST;
+        HttpStatus status = HttpStatus.CONFLICT;
 
         StandError standError = new StandError(Instant.now(),status.value(),
                 error,e.getMessage(),request.getRequestURI());
