@@ -1,7 +1,9 @@
 package com.agendadorTarefas.agendador.services;
 
+import com.agendadorTarefas.agendador.dtos.ClientSummary;
 import com.agendadorTarefas.agendador.entities.Client;
 import com.agendadorTarefas.agendador.exception.NotFoundClientException;
+import com.agendadorTarefas.agendador.mappers.ClientMapper;
 import com.agendadorTarefas.agendador.repositories.ClientRepository;
 import org.springframework.stereotype.Service;
 
@@ -11,21 +13,29 @@ import java.util.List;
 public class ClientService {
 
     private ClientRepository clientRepository;
+    private ClientMapper clientMapper;
 
-    public ClientService(ClientRepository clientRepository){
+    public ClientService(ClientRepository clientRepository, ClientMapper clientMapper) {
         this.clientRepository = clientRepository;
+        this.clientMapper = clientMapper;
     }
 
-    public Client findById(Long id){
-        return clientRepository.findById(id).orElseThrow(()->new NotFoundClientException("Not Found Client id: " + id));
+    public ClientSummary findById(Long id) {
+        Client client = clientRepository.findById(id).
+                orElseThrow(() -> new NotFoundClientException("Not Found Client id: " + id));
+        return clientMapper.toDto(client);
     }
 
-    public List<Client> findAll(){
-        return clientRepository.findAll();
+    public List<ClientSummary> findAll() {
+        return clientRepository.findAll().stream().
+                map(clientMapper::toDto).toList();
     }
 
-    public Client create(Client Client){
-        return clientRepository.save(Client);
+    public ClientSummary create(ClientSummary dto) {
+        Client client = clientMapper.toEntity(dto);
+        clientRepository.save(client);
+        return clientMapper.toDto(client);
+
     }
 }
 
