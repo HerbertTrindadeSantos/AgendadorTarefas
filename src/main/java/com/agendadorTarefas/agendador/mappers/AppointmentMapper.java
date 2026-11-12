@@ -6,12 +6,13 @@ import com.agendadorTarefas.agendador.entities.Client;
 import com.agendadorTarefas.agendador.entities.Task;
 import com.agendadorTarefas.agendador.entities.Worker;
 import com.agendadorTarefas.agendador.entities.enums.Status;
+import org.springframework.stereotype.Component;
 
 
-
+@Component
 public class AppointmentMapper {
 
-    public static Appointment toEntity(AppointmentRequest appointmentRequest, Task task, Client client, Worker worker){
+    public Appointment toEntity(AppointmentRequest appointmentRequest, Task task, Client client, Worker worker) {
         Appointment appointment = new Appointment();
         appointment.setId(null);
         appointment.setDescription(appointmentRequest.description());
@@ -24,15 +25,15 @@ public class AppointmentMapper {
         return appointment;
     }
 
-    public static AppointmentResponse toResponse(Appointment appointment){
+    public AppointmentResponse toResponse(Appointment appointment) {
 
-        TaskSummary taskSummary = new TaskSummary(appointment.getTask().getId(),appointment.getTask().getDescription());
+        TaskSummary taskSummary = new TaskSummary(appointment.getTask().getId(), appointment.getTask().getDescription());
 
-        ClientSummary clientSummary = new ClientSummary(appointment.getClient().getId(),appointment.getClient().getName()
-                ,appointment.getClient().getSurname(),appointment.getClient().getAddress(),appointment.getClient().getCellPhone());
+        ClientSummary clientSummary = new ClientSummary(appointment.getClient().getId(), appointment.getClient().getName()
+                , appointment.getClient().getSurname(), appointment.getClient().getAddress(), appointment.getClient().getCellPhone());
 
         WorkerSummary workerSummary = new WorkerSummary(appointment.getWorker().getId()
-                ,appointment.getWorker().getName(),appointment.getWorker().getSurname());
+                , appointment.getWorker().getName(), appointment.getWorker().getSurname());
 
 
         return new AppointmentResponse(
