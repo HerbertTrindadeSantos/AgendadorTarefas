@@ -113,7 +113,7 @@ curl -X POST http://localhost:8080/client \
 ```json
 {
     "description": "Limpeza simples de Ar condicionado",
-    "moment": "2026-12-01T10:00:00",
+    "moment": "15:30 15/11/2026",
     "status": "PENDING",
     "taskId": 1,
     "clientId": 1,
@@ -127,7 +127,7 @@ curl -X POST http://localhost:8080/client \
 {
     "id": 1,
     "description": "Limpeza simples de Ar condicionado",
-    "moment": "2026-12-01T10:00:00",
+    "moment": "15:30 15/11/2026",
     "status": "PENDING",
     "task": { "id": 1, "description": "Limpeza simples de Ar condicionado" },
     "client": { "id": 1, "name": "Tiago", "surname": "Henrique" },
