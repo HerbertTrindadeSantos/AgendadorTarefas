@@ -57,7 +57,7 @@ docker compose down
 Tenha um PostgreSQL rodando e configure as credenciais no `application.yml` ou por variáveis de ambiente. <!-- CONFIRMAR nomes das variáveis -->
 
 ```bash
-mvn spring-boot:run
+./mvn spring-boot:run
 ```
 
 ---
@@ -67,7 +67,7 @@ mvn spring-boot:run
 A suíte cobre cadastro válido, cadastro inválido e consultas:
 
 ```bash
-mvn test
+./mvn test
 ```
 
 ---
@@ -114,7 +114,7 @@ curl -X POST http://localhost:8080/client \
 {
     "description": "Limpeza simples de Ar condicionado",
     "moment": "15:30 15/11/2026",
-    "status": "PENDING",
+    "status": 1,
     "taskId": 1,
     "clientId": 1,
     "workerId": 1
